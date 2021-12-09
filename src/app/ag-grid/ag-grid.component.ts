@@ -2,7 +2,7 @@ import { ColDef, GridApi, GridOptions } from '@ag-grid-community/core';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { range } from '../helpers';
 
 @Component({
@@ -32,10 +32,6 @@ export class AgGridComponent {
       )
     );
     this.agColumnDef = this.agForm.controls['columns'].valueChanges.pipe(
-      tap(() => {
-        this.resetTimers();
-        this.first = performance.now();
-      }),
       map((value) => range(1, value, 1)),
       map((numberArr) => {
         let newColDefs: ColDef[] = [];
@@ -56,8 +52,7 @@ export class AgGridComponent {
           newColDefs = oldColDefs;
         }
         return newColDefs;
-      }),
-      tap(() => (this.end = performance.now()))
+      })
     );
   }
   resetTimers() {
