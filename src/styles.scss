@@ -1,0 +1,69 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@ag-grid-community/core/dist/styles/mixins/ag-grid-mixins';
+@import '~@ag-grid-community/core/dist/styles/structural/common-structural';
+@import '~@ag-grid-community/core/dist/styles/ag-theme-material.min';
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+
+  display: flex;
+  flex-direction: column;
+}
+
+:root {
+  --max-inner-width: 1400px;
+  --inner-padding: Max(10px, calc((100vw - var(--max-inner-width)) / 2));
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 20px;
+  --spacing-lg: 40px;
+}
+
+router-outlet {
+  display: contents;
+}
+
+.ag-theme-material {
+  .ag-cell,
+  .ag-header-cell {
+    &.narrow {
+      padding-inline: 8px;
+    }
+
+    &.narrow .mat-mini-fab .mat-button-wrapper {
+      padding: 0;
+    }
+  }
+}
+
+mat-expansion-panel {
+  &.mat-expansion-panel-spacing {
+    margin: 0;
+  }
+}
+
+.mat-inline-confirm .mat-menu-content {
+  display: grid;
+  gap: var(--spacing-sm);
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+
+  .button-container {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+}
+.red {
+  background: red;
+}
+.green {
+  background: green;
+}

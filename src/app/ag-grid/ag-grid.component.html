@@ -1,0 +1,16 @@
+<h2>Ag-Grid</h2>
+<form [formGroup]="agForm">
+  <mat-form-field>
+    <mat-label>Rows</mat-label>
+    <input name="rows" id="rows" matInput formControlName="rows" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Columns</mat-label>
+    <input name="columns" id="columns" matInput formControlName="columns" />
+  </mat-form-field>
+</form>
+<app-custom-grid
+  [gridOptions]="gridOptions"
+  [rowData]="agRowData | async"
+  [columnDefs]="agColumnDef | async"
+></app-custom-grid>

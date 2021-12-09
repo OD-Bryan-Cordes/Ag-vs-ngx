@@ -1,0 +1,10 @@
+<ag-grid-angular
+  class="ag-theme-material"
+  [gridOptions]="gridOptions"
+  [rowData]="(formValue | async) ?? rowData ?? undefined"
+  [modules]="modules"
+  [context]="{ formArray: formArray?.control }"
+  [class.ag-invalid-no-rows]="formArray?.touched && formArray?.control?.hasError('required')"
+  [columnDefs]="columnDefs"
+>
+</ag-grid-angular>

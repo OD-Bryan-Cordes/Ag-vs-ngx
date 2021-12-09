@@ -1,0 +1,41 @@
+<h2>NGX DataTables</h2>
+<form [formGroup]="ngxForm">
+  <mat-form-field>
+    <mat-label>Rows</mat-label>
+    <input name="rows" id="rows" matInput formControlName="rows" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Columns</mat-label>
+    <input name="columns" id="columns" matInput formControlName="columns" />
+  </mat-form-field>
+</form>
+
+<ngx-datatable
+  style="height: 500px"
+  class="material table"
+  [scrollbarV]="true"
+  [scrollbarH]="true"
+  [headerHeight]="50"
+  [footerHeight]="50"
+  [rowHeight]="40"
+  [rows]="(dataTablesRows | async) ?? []"
+>
+  <ngx-datatable-column
+    *ngFor="let col of (dataTablesColumns | async) ?? []"
+    [name]="col.name!"
+    [prop]="col.prop!"
+    [cellClass]="getCellClass"
+  >
+    <ng-template
+      ngx-datatable-cell-template
+      let-rowIndex="rowIndex"
+      let-value="value"
+      let-row="row"
+      let-group="group"
+      let-rowHeight="rowHeight"
+      let-class="class"
+    >
+      {{ col.prop === 'status' ? !!(rowIndex % 3) : value }}
+    </ng-template>
+  </ngx-datatable-column>
+</ngx-datatable>
