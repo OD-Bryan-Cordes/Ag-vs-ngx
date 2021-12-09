@@ -33,30 +33,16 @@ export class AgGridComponent {
     );
     this.agColumnDef = this.agForm.controls['columns'].valueChanges.pipe(
       map((value) => range(1, value, 1)),
-      map((numberArr) => {
-        let newColDefs: ColDef[] = [];
-        const oldColDefs = this.gridApi?.getColumnDefs() ?? [];
-        if (oldColDefs.length < numberArr.length) {
-          const newNumbers = numberArr.slice(oldColDefs.length);
-          const mappedCol = newNumbers.map((value) => ({
-            headerName: `${value}`,
-            field: value % 4 ? 'name' : 'status',
-            cellClassRules: {
-              red: String(!(value % 4)),
-              green: String(value % 4),
-            },
-          }));
-          newColDefs = [...oldColDefs, ...mappedCol];
-        } else {
-          oldColDefs.length = numberArr.length;
-          newColDefs = oldColDefs;
-        }
-        return newColDefs;
-      })
+      map((numberArr) =>
+        numberArr.map((value) => ({
+          headerName: `${value}`,
+          field: value % 4 ? 'name' : 'status',
+          cellClassRules: {
+            red: String(!(value % 4)),
+            green: String(value % 4),
+          },
+        }))
+      )
     );
-  }
-  resetTimers() {
-    this.first = 0;
-    this.end = 0;
   }
 }
