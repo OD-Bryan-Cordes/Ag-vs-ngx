@@ -9,6 +9,7 @@
     <input name="columns" id="columns" matInput formControlName="columns" />
   </mat-form-field>
 </form>
+Time Taken: {{ end - first }}
 <app-custom-grid
   [gridOptions]="gridOptions"
   [rowData]="agRowData | async"

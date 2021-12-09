@@ -1,12 +1,8 @@
-import {
-  ColDef,
-  GridApi,
-  GridOptions,
-} from '@ag-grid-community/core';
+import { ColDef, GridApi, GridOptions } from '@ag-grid-community/core';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable, of} from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { range } from '../helpers';
 
 @Component({
@@ -24,6 +20,8 @@ export class AgGridComponent {
       this.gridApi = event.api;
     },
   };
+  first = 0;
+  end = 0;
   constructor(private fb: FormBuilder) {
     this.agRowData = this.agForm.controls['rows'].valueChanges.pipe(
       map((value) => range(1, value, 1)),
@@ -34,6 +32,10 @@ export class AgGridComponent {
       )
     );
     this.agColumnDef = this.agForm.controls['columns'].valueChanges.pipe(
+      tap(() => {
+        this.resetTimers();
+        this.first = performance.now();
+      }),
       map((value) => range(1, value, 1)),
       map((numberArr) => {
         let newColDefs: ColDef[] = [];
@@ -43,11 +45,10 @@ export class AgGridComponent {
           const mappedCol = newNumbers.map((value) => ({
             headerName: `${value}`,
             field: value % 4 ? 'name' : 'status',
-            cellClassRules:
-              {
-                    red: String(!(value % 4)),
-                    green: String(value % 4),
-                  },
+            cellClassRules: {
+              red: String(!(value % 4)),
+              green: String(value % 4),
+            },
           }));
           newColDefs = [...oldColDefs, ...mappedCol];
         } else {
@@ -55,7 +56,12 @@ export class AgGridComponent {
           newColDefs = oldColDefs;
         }
         return newColDefs;
-      })
+      }),
+      tap(() => (this.end = performance.now()))
     );
+  }
+  resetTimers() {
+    this.first = 0;
+    this.end = 0;
   }
 }
